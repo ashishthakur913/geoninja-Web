@@ -7,10 +7,10 @@ const composeEnhancers = (typeof window !== 'undefined' && window.__REDUX_DEVTOO
 
 export const initialStore = fromJS({
 	city: {
-		lat: "47.3048",
-		lng: "-117.9713",
-		name: "Sprague",
-		state: "Washington"
+		name:"San Jose",
+		state:"California",
+		lat:"37.3021",
+		lng:"-121.8489"
 	},
 	common: {
 		loader: {

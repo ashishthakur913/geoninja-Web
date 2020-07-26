@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
-import MapComponent from './Map/MapComponent'
+import MapContainer from './Map/MapContainer'
+import HeaderComponent from './Header/HeaderComponent'
 import './App.css'
 
 import {
@@ -14,7 +15,8 @@ function App() {
         <Router>
             <Switch>
                 <Route path="/">
-                    <MapComponent />
+                    <HeaderComponent/ >
+                    <MapContainer />
                 </Route>
             </Switch>
         </Router>

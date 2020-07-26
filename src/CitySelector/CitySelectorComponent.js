@@ -8,7 +8,9 @@ export default class CitySelectorComponent extends React.Component {
     constructor(props) {
         super(props)
         this.wrapperRef = React.createRef();
+        this.fetchRoutes.bind(this)
         this.state = {
+            city_name: "",
             cities_search: [],
             isSearchOverlayOpen: false
         }
@@ -24,41 +26,39 @@ export default class CitySelectorComponent extends React.Component {
 
     handleClickOutside(event) {
         if (this.wrapperRef && !this.wrapperRef.current.contains(event.target)) {
-            this.toggleSearchOverlay(false)
+            this.setState({isSearchOverlayOpen:false})
         }
     }
 
     onSearchClick(e) {
-        this.toggleSearchOverlay(true)
+        this.setState({isSearchOverlayOpen:true})
     }
 
     getCities(e) {
         let city_name = e.target.value
-        this.setState({isSearchOverlayOpen: true})
+        this.setState({city_name: city_name})
+        this.setState({isSearchOverlayOpen:true})
         axios.get(`${API_HOST}/cities?where={"name": {"$regex": ".*${city_name}.*"}}&max_results=10`)
             .then(res => {
                 this.setState({cities_search: res.data._items})
             })
     }
 
-    toggleSearchOverlay(isOpened) {
-        isOpened = isOpened != undefined ? isOpened : !this.state.isSearchOverlayOpen
-        this.setState({isSearchOverlayOpen:isOpened})
-    }
-
     fetchRoutes(city) {
-        this.setState({isSearchOverlayOpen: false})
-        this.props.setLoaderVisibility(true)
-
+        this.setState({city_name: city.name + " " + city.state})
+        this.setState({isSearchOverlayOpen:false})
+        this.props.setCity(city)
     }
 
     render() {
         return (
-            <div ref={this.wrapperRef} onClick={this.onSearchClick.bind(this)} className="city_search">
+            <div ref={this.wrapperRef} className="city_search">
                 <div className="city_search_icon">
                     <SearchIcon />
                 </div>
                 <InputBase
+                    value={this.state.city_name}
+                    onClick={this.onSearchClick.bind(this)}
                     placeholder="Search City"
                     inputProps={{ 'aria-label': 'search' }}
                     onChange={this.getCities.bind(this)}
