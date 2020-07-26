@@ -42,8 +42,14 @@ export default class CitySelectorComponent extends React.Component {
     }
 
     toggleSearchOverlay(isOpened) {
-        isOpened = isOpened ? isOpened : !this.state.isSearchOverlayOpen
+        isOpened = isOpened != undefined ? isOpened : !this.state.isSearchOverlayOpen
         this.setState({isSearchOverlayOpen:isOpened})
+    }
+
+    fetchRoutes(city) {
+        this.setState({isSearchOverlayOpen: false})
+        this.props.setLoaderVisibility(true)
+
     }
 
     render() {
@@ -58,8 +64,8 @@ export default class CitySelectorComponent extends React.Component {
                     onChange={this.getCities.bind(this)}
                 />
                 <div className="search-results">
-                    {this.state.isSearchOverlayOpen && this.state.cities_search.map((city) => {
-                        return <div className="search-result">
+                    {this.state.isSearchOverlayOpen && this.state.cities_search.map((city, index) => {
+                        return <div key={index} onClick={() => this.fetchRoutes(city)} className="search-result">
                             {city.name}, {city.state} 
                         </div>
                     })}

@@ -1,6 +1,7 @@
 import React from 'react';
 import mapboxgl from 'mapbox-gl'
-import CitySelectorComponent from '../CitySelector/CitySelectorComponent'
+import CitySelectorContainer from '../CitySelector/CitySelectorContainer'
+import LoaderContainer from '../Common/Loader/LoaderContainer'
 
 mapboxgl.accessToken = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA';
 
@@ -1992,7 +1993,8 @@ export default class MapComponent extends React.Component {
         return (
             <>
                 <div ref={this.mapRef} className="absolute top right left bottom" />
-                <CitySelectorComponent />
+                <CitySelectorContainer />
+                <LoaderContainer/ >
             </>
         );
     }
